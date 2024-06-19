@@ -1,35 +1,46 @@
+#[derive(Debug)]
 struct Rectangle {
-    height: u32,
     width: u32,
+    height: u32,
 }
 
-struct Square {
-    side: u32,
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn width(&self) -> bool {
+        self.width > 0
+    }
+
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+
+    fn square(size: u32) -> Self {
+        Self {
+            width: size,
+            height: size
+        }
+    }
 }
 
 fn main() {
-    let rect1 = Rectangle {
-        height: 30,
-        width:50,
+    let rect1: Rectangle = Rectangle {
+        width: 3,
+        height: 50,
     };
 
-    let square1 = Square {
-        side: 5,
+    let rect2: Rectangle = Rectangle {
+        width: 10,
+        height: 40,
     };
 
-    // Rectangle
-    // println!("rect1 is {:#?}", rect1);
-    println!("The area of the reactangle is {} square pixel", area(&rect1));
+    let square = Rectangle::square(10);
 
-    // Square
-    println!("The area of Square is {}", area_of_square(square1))
-    
-}
-
-fn area(rectangle: &Rectangle) -> u32 {
-    rectangle.height * rectangle.width
-}
-
-fn area_of_square(square: Square) -> u32 {
-    square.side * 4
+    println!("The area of rectangle is {} square pixels", rect1.area());
+    println!("{}", rect1.width());
+    println!("square {:?}", square.area());
+    println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect1));
+    println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect2));
 }
